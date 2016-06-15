@@ -90,14 +90,8 @@ public class Rip{
 					server.receive(paquete);
 					if(paquete != null){
 						procesarpaquete(paquete);
-						time2=(int)Math.floor(Math.random()*10000);
-
-						if(time2 > 0){
-							server.setSoTimeout((int)time2);
-						}
-						else{
-							server.setSoTimeout(0);
-						}
+						time2=10000+(int)Math.floor(Math.random()*1666.667);
+							server.setSoTimeout((int)time2);		
 					}
 						
 				}			
@@ -348,6 +342,7 @@ public class Rip{
 
 				if(!t.getSub() && t.comprobareliminar()){ // si sobrepasa los 100s se elimina de la tabla
 					lista.remove(t);
+					enviarlista();
 			
 				}	
 
@@ -356,9 +351,11 @@ public class Rip{
 		int i =0;
 		for(Tabla t:lista_aux){
 			if(!t.getSub() && t.comprobarcambio()){ // si sobrepasa los 60s se modifica su coste a 16
-				lista.get(i).setCoste(16);
-			
-		}
+				if(t.getCoste()!=16){
+				  lista.get(i).setCoste(16);
+					enviarlista();
+				}	
+			}
 			i++;
 
 
